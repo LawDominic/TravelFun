@@ -5,8 +5,8 @@
 
   <p align="center">
     A concept mobile app for tourists - providing information for places to stay and eat.
-    <br />
     <a href="https://github.com/LawDominic/TravelFun/blob/master/README.md"><strong>Explore the docs »</strong></a>
+    <br />
     <br />
   </p>
 </p>
