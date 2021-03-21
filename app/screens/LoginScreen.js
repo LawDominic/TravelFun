@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
-import { Image, ImageBackground, StyleSheet, View } from 'react-native';
+import { ImageBackground, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {Formik} from 'formik';
+import * as yup from 'yup';
 
 import AppButton from '../components/AppButton';
 import AppColor from '../config/AppColor';
@@ -8,10 +10,21 @@ import AppScreen from '../components/AppScreen';
 import AppText from '../components/AppText';
 import AppTextInput from '../components/AppTextInput';
 
+const schema = yup.object().shape(
+    {
+        email: yup.
+            string()
+            .required()
+            .email()
+            .label('Email'),
+        password: yup
+            .string()
+            .required()
+            .label('Password'),
+    }
+);
+//TODO: Database
 function LoginScreen({navigation}) {
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
-
     return (
         <AppScreen style={styles.container}>
             
@@ -30,37 +43,61 @@ function LoginScreen({navigation}) {
                 </AppText>
             </View>
 
-            <View style={styles.textInput}>
-                <AppTextInput
-                            autoCapitalize='none'
-                            autoCorrect={false}
-                            icon='email'
-                            placeholder='Email address'
-                            textContentType='emailAddress'
-                            onChangeText = { userInputEmail => setEmail(userInputEmail)}
-                /> 
-                <AppTextInput
-                            autoCapitalize='none'
-                            autoCorrect={false}
-                            icon='lock'
-                            placeholder='Password'
-                            secureTextEntry
-                            textContentType='password'
-                            onChangeText = { userInputPW => setPassword(userInputPW)}
-                />   
-            </View>
+            <Formik //TODO: Form validation and error handling
+                initialValues={{email:'', password:'',}}
+                onSubmit = {values => console.log(values)}
+                validationSchema={schema}
+                >
+                
+            {({handleChange, handleSubmit, errors, setFieldTouched, touched}) => (
+            <>
+                <View style={styles.textInput}>
+                    {touched.email && <AppText>{errors.email}</AppText>}
+                    <AppTextInput
+                                autoCapitalize='none'
+                                autoCorrect={false}
+                                icon='email'
+                                placeholder='Email address'
+                                textContentType='emailAddress'
+                                onBlur = {() => setFieldTouched('email')}
+                                onChangeText = { handleChange('email') }
+                    /> 
+                    {touched.password && <AppText>{errors.password}</AppText>}
+                    <AppTextInput
+                                autoCapitalize='none'
+                                autoCorrect={false}
+                                icon='lock'
+                                placeholder='Password'
+                                secureTextEntry
+                                textContentType='password'
+                                onBlur = {() => setFieldTouched('password')}
+                                onChangeText = { handleChange('password') }
+                    />   
+                </View>
 
-            <View style={styles.registerBtn}>
-                <AppButton style="button" title="Create an account" color="blue" textC="lightergrey" onPress={() => console.log(email,password)}/>
-            </View>
+                <View style={styles.loginBtn}>
+                    <AppButton style="button" title="Login" color="blue" textC="lightergrey" onPress={handleSubmit}/>
+                </View>
+
+                </>
+            )}
+
+            </Formik>
 
             <View>
                 <AppText style={styles.newMemberMsg}>
-                    I'm a new member <AppText onPress={ () => navigation.navigate("Register")} style={styles.signInMsg}>Sign Up
-                    </AppText>
+                    <TouchableWithoutFeedback>
+                        <View>
+                            <AppText>
+                            I'm a new member,
+                            </AppText>
+                        </View>
+                    </TouchableWithoutFeedback>
+                    <TouchableOpacity onPress={ () => navigation.navigate("Register")}>
+                        <AppText style={styles.signUpMsg}> Sign Up</AppText>
+                    </TouchableOpacity>
                 </AppText>
             </View>
-
 
             </ImageBackground>
         </AppScreen>
@@ -76,6 +113,10 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'black',
     },
+    loginBtn: {
+        marginTop: 80,
+        alignItems: 'center',
+    },
     newMemberMsg: {
         color: AppColor.blackblue,
         marginTop: 110,
@@ -86,10 +127,6 @@ const styles = StyleSheet.create({
         ...StyleSheet.absoluteFillObject,
         backgroundColor: AppColor.lightgrey,
         opacity: 0.9,
-        alignItems: 'center',
-    },
-    registerBtn: {
-        marginTop: 80,
         alignItems: 'center',
     },
     textInput: {
@@ -111,7 +148,7 @@ const styles = StyleSheet.create({
         marginTop: 110,
         width: 300,
     },
-    signInMsg: {
+    signUpMsg: {
         color: AppColor.blue,
         fontSize: 16,
         fontWeight: 'bold',

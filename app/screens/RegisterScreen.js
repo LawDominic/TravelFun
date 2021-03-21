@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
-import { Image, ImageBackground, StyleSheet, View } from 'react-native';
+import { ImageBackground, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-
+import {Formik} from 'formik';
+import * as yup from 'yup';
+// import * as SQLite from 'expo-sqlite';
 
 import AppButton from '../components/AppButton';
 import AppColor from '../config/AppColor';
@@ -9,11 +11,27 @@ import AppScreen from '../components/AppScreen';
 import AppText from '../components/AppText';
 import AppTextInput from '../components/AppTextInput';
 
+const schema = yup.object().shape(
+    {
+        fullName: yup
+            .string()
+            .required()
+            .label('Full Name'),
+        email: yup.
+            string()
+            .required()
+            .email()
+            .label('Email'),
+        password: yup
+            .string()
+            .required()
+            .min(8)
+            .max(16)
+            .label('Password'),
+    }
+);
+//TODO: Database
 function RegisterScreen({navigation}) {
-    const [fullName, setfullName] = useState();
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
-
     return (
         <AppScreen style={styles.container}>
             
@@ -21,7 +39,6 @@ function RegisterScreen({navigation}) {
                 source={require('../assets/bg-img.jpeg')}
                 style={styles.bgimg}>
             <View style={styles.overlay}/>
-
             <View>
                 <AppText style={styles.registerHeadeMsg}>
                     Sign Up
@@ -32,45 +49,72 @@ function RegisterScreen({navigation}) {
                 </AppText>
             </View>
 
-            <View style={styles.textInput}>
-                <AppTextInput
-                            autoCapitalize='words'
-                            autoCorrect={false}
-                            icon='account-box'
-                            placeholder='Full Name'
-                            textContentType='name'
-                            onChangeText = { userInputName => setFullName(userInputName)}
-                /> 
-                <AppTextInput
-                            autoCapitalize='none'
-                            autoCorrect={false}
-                            icon='email'
-                            placeholder='Email address'
-                            textContentType='emailAddress'
-                            onChangeText = { userInputEmail => setEmail(userInputEmail)}
-                /> 
-                <AppTextInput
-                            autoCapitalize='none'
-                            autoCorrect={false}
-                            icon='lock'
-                            placeholder='Password'
-                            secureTextEntry
-                            textContentType='password'
-                            onChangeText = { userInputPW => setPassword(userInputPW)}
-                />   
-            </View>
+            <Formik //TODO: Form validation and error handling
+                initialValues={{fullName:'', email:'', password:'',}}
+                onSubmit = {values => console.log(values)}
+                validationSchema={schema}
+                >
 
-            <View style={styles.registerBtn}>
-                <AppButton style="button" title="Create an account" color="blue" textC="lightergrey" onPress={() => console.log(fullName, email,password )}/>
-            </View>
+            {({handleChange, handleSubmit, errors, setFieldTouched, touched}) => (
+                <>
+                <View style={styles.textInput}>
+                    <AppTextInput
+                                autoCapitalize='words'
+                                autoCorrect={false}
+                                icon='account-box'
+                                placeholder='Full Name'
+                                textContentType='name'
+                                onBlur = {() => setFieldTouched('fullName')}
+                                onChangeText = { handleChange('fullName') }
+                    /> 
+                    {touched.fullName && <AppText>{errors.fullName}</AppText>}
+                    <AppTextInput
+                                autoCapitalize='none'
+                                autoCorrect={false}
+                                icon='email'
+                                placeholder='Email address'
+                                textContentType='emailAddress'
+                                onBlur = {() => setFieldTouched('email')}
+                                onChangeText = { handleChange('email') }
+                    /> 
+                    {touched.email && <AppText>{errors.email}</AppText>}
+                    <AppTextInput
+                                autoCapitalize='none'
+                                autoCorrect={false}
+                                icon='lock'
+                                placeholder='Password'
+                                secureTextEntry
+                                textContentType='password'
+                                onBlur = {() => setFieldTouched('password')}
+                                onChangeText = { handleChange('password') }
+                    />  
+                    {touched.password && <AppText>{errors.password}</AppText>}
+ 
+                </View>
 
+                <View style={styles.registerBtn}>
+                    <AppButton style="button" title="Create an account" color="blue" textC="lightergrey" onPress={handleSubmit}/>
+                    
+                </View>
+                </>
+            )}        
+
+            </Formik>
+            
             <View>
-                <AppText style={styles.newMemberMsg}>
-                    I'm already a new member, <AppText style={styles.signInMsg} onPress={ () => navigation.navigate("Login")}>Sign In
-                    </AppText>
+                <AppText style={styles.existingMemberMsg}>
+                    <TouchableWithoutFeedback>
+                        <View>
+                            <AppText>
+                            I'm an existing member,
+                            </AppText>
+                        </View>
+                    </TouchableWithoutFeedback>
+                    <TouchableOpacity onPress={ () => navigation.navigate("Login")}>
+                        <AppText style={styles.signInMsg}> Sign In</AppText>
+                    </TouchableOpacity>
                 </AppText>
             </View>
-
 
             </ImageBackground>
         </AppScreen>
@@ -78,17 +122,20 @@ function RegisterScreen({navigation}) {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: 'black',
+    test: {
+
     },
     bgimg: {
         flex: 1,
         backgroundColor: 'black',
     },
-    newMemberMsg: {
+    container: {
+        flex: 1,
+        backgroundColor: 'black',
+    },
+    existingMemberMsg: {
         color: AppColor.blackblue,
-        marginTop: 50,
+        top: 330,
         textAlign: 'center',
         fontSize: 14,
     },
@@ -99,12 +146,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     registerBtn: {
-        marginTop: 80,
+        top: 310,
         alignItems: 'center',
     },
     textInput: {
         alignItems: 'center',
-        marginTop: 100,
+        top: 180,
     },
     registerHeadeMsg: {
         color: AppColor.blackblue,
@@ -118,7 +165,7 @@ const styles = StyleSheet.create({
         fontWeight: 'normal',
         fontSize: 18,
         left: 40,
-        marginTop: 110,
+        top: 110,
         width: 300,
     },
     signInMsg: {
@@ -127,6 +174,5 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     }
 })
-
 
 export default RegisterScreen;
