@@ -134,7 +134,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'black',
     },
     existingMemberMsg: {
-        color: AppColor.blackblue,
         top: 330,
         textAlign: 'center',
         fontSize: 14,
@@ -154,14 +153,12 @@ const styles = StyleSheet.create({
         top: 180,
     },
     registerHeadeMsg: {
-        color: AppColor.blackblue,
         fontSize: 42,
         fontWeight: 'bold',
         top: 100,
         left: 40,
     },
     registerBodyMsg: {
-        color: AppColor.blackblue,
         fontWeight: 'normal',
         fontSize: 18,
         left: 40,
