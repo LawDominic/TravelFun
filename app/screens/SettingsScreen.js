@@ -25,16 +25,20 @@ function SettingsScreen({navigation}) {
             {/* TODO: Fix email/location section */}
 
             <View style={styles.subHeaderTextContainer}>
-                <AppListItem title="keanu.reeves@gmail.com" IconComponent={
+                <AppListItem title="keanu.reeves@gmail.com" titleStyle="subtitle" IconComponent={
                     <AppIcon iconName="email-outline" size={24} colorStyle={{color: AppColor.grey}}/>
+                }/>
+                <AppListItem title="Sydney, Australia" titleStyle="subtitle" IconComponent={
+                    <AppIcon iconName="map-marker-outline" size={24} colorStyle={{color: AppColor.grey}}/>
                 }/>
             </View>
 
-            <AppListItem title="My Favorites" IconComponent={
-                <AppIcon iconName="heart-outline" size={30} colorStyle={{color: AppColor.azure}}/>
-            }/>
+            <View style={styles.settingsContainer}>
+                <AppListItem title="My Favorites" titleStyle="title" IconComponent={
+                    <AppIcon iconName="heart-outline" size={30} colorStyle={{color: AppColor.azure}}/>
+                }/>
 
-            <AppListItem title="zxc" textStyle="subtitle"/>
+            </View>
         </AppScreen>
     );
 }
@@ -67,7 +71,11 @@ const styles = StyleSheet.create({
         fontStyle: 'italic',
     },
     subHeaderTextContainer: {
-        marginLeft: 3,
+        marginLeft: 10,
+    },
+    settingsContainer: {
+        marginLeft: 7,
+        marginTop: 30,
     }
 })
 
