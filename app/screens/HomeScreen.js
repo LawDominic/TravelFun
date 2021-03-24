@@ -1,6 +1,7 @@
 // import React from 'react';
 
 // import { Shadow } from 'react-native-neomorph-shadows';
+// import AppText from '../components/AppText';
 
 // function HomeScreen(props) {
 //     return (
@@ -19,6 +20,7 @@
 //             // ...include most of View/Layout styles
 //         }}
 //         >
+//             <AppText>asd</AppText>
 //         </Shadow>
 //     );
 // }
