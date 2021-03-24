@@ -1,22 +1,26 @@
 import React from 'react';
 
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 import AppColor from '../config/AppColor';
 import AppIcon from '../components/AppIcon';
 import AppMinimalCard from '../components/AppMinimalCard';
 import AppScreen from '../components/AppScreen';
 
-function ThingsToDoScreen(props) {
+function ThingsToDoScreen({navigation}) {
     return (
         <AppScreen style={styles.screenContainer}>
             <View style={styles.container}>
                 <View style={styles.firstCard}>
+                <TouchableOpacity onPress={ () => navigation.navigate("Nature")} underlayColor={AppColor.blue}>
                     <AppMinimalCard title="Nature & Parks"
                         IconComponent={
                         <AppIcon iconName="nature-people" size={42} colorStyle={{color: AppColor.green}}/>
                         }
+                        screen="Nature"
                     />
+                </TouchableOpacity>
                 </View>
                 <View style={styles.secondCard}>
                     <AppMinimalCard title="Beaches"
