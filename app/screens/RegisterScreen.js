@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'black',
     },
     existingMemberMsg: {
-        top: 330,
+        top: 350,
         textAlign: 'center',
         fontSize: 14,
     },
