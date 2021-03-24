@@ -10,6 +10,20 @@ import AppScreen from '../components/AppScreen';
 import AppText from '../components/AppText';
 import AppTextInput from '../components/AppTextInput';
 
+const users = [
+    {
+        name: "Keanu Reeves",
+        email: "keanu.reeves@gmail.com",
+        password: "password123"
+    }
+]
+
+const validateUser = () => {
+    return (
+        users.filter((user) => user.email === email && user.password === password).length > 0
+    )
+}
+
 const schema = yup.object().shape(
     {
         email: yup.
@@ -45,7 +59,16 @@ function LoginScreen({navigation}) {
 
             <Formik //TODO: Form validation and error handling
                 initialValues={{email:'', password:'',}}
-                onSubmit = {values => console.log(values)}
+                onSubmit = {(values, {resetForm}) => {
+                    if (validateUser(values)){
+                        console.log(values);
+                        resetForm();
+                        navigation.navigate("ThingsToDo");
+                    } else {
+                        resetForm();
+                        alert("Invalid login details")
+                    }
+                }}
                 validationSchema={schema}
                 >
                 
@@ -119,7 +142,7 @@ const styles = StyleSheet.create({
     },
     newMemberMsg: {
         color: AppColor.blackblue,
-        marginTop: 110,
+        top: 80,
         textAlign: 'center',
         fontSize: 14,
     },
