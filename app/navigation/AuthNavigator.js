@@ -9,7 +9,10 @@ import HomeScreen from '../screens/HomeScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import ThingsToDoScreen from '../screens/ThingsToDoScreen';
 import NatureScreen from '../screens/ThingsToDo/NatureScreen';
-import MyFavoriteScreen from '../screens/MyFavoritesScreen';
+import BeachScreen from '../screens/ThingsToDo/BeachScreen';
+import MuseumScreen from '../screens/ThingsToDo/MuseumScreen';
+import ThemeParkScreen from '../screens/ThingsToDo/ThemeParkScreen';
+// import MyFavoriteScreen from '../screens/MyFavoriteScreen';
 
 
 const AppStack = createStackNavigator();
@@ -17,7 +20,10 @@ const AppStack = createStackNavigator();
 const AuthNavigator = () => (
     <AppStack.Navigator initialRouteName="ThingsToDo">
         {/* <AppStack.Screen name="Home" component={HomeScreen} options={{headerShown:false}}/> */}
-        <AppStack.Screen name="MyFavorite" component={MyFavoriteScreen} options={{headerShown:false}}/>
+        {/* <AppStack.Screen name="MyFavorite" component={MyFavoriteScreen} options={{headerShown:false}}/> */}
+        <AppStack.Screen name="Beach" component={BeachScreen} options={{headerShown:false}}/>
+        <AppStack.Screen name="Museum" component={MuseumScreen} options={{headerShown:false}}/>
+        <AppStack.Screen name="ThemePark" component={ThemeParkScreen} options={{headerShown:false}}/>
         <AppStack.Screen name="ThingsToDo" component={ThingsToDoScreen} options={{headerShown:false}}/>
         <AppStack.Screen name="Settings" component={SettingsScreen} options={{headerShown:false}}/>
         <AppStack.Screen name="Welcome" component={WelcomeScreen} options={{headerShown:false}}/>
