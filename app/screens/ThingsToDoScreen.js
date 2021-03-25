@@ -1,48 +1,76 @@
 import React from 'react';
 
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { FlatList, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 import AppColor from '../config/AppColor';
 import AppIcon from '../components/AppIcon';
 import AppMinimalCard from '../components/AppMinimalCard';
 import AppScreen from '../components/AppScreen';
+import AppText from '../components/AppText';
+
+const cards = [
+    {
+        id: 1,
+        title: "Natue & Parks",
+        iconName: "nature-people",
+        iconSize: 42,
+        iconColor: "green",
+        screen: {screen: "Nature"},
+    },
+    {
+        id: 2,
+        title: "Beaches",
+        iconName: "beach",
+        iconSize: 42,
+        iconColor: "yellow",
+        screen: {screen: "Beach"},
+    },
+    {
+        id: 3,
+        title: "Museums & Art Galleries",
+        iconName: "bank",
+        iconSize: 42,
+        iconColor: "orange",
+        screen: {screen: "Museum"},
+    },
+    {
+        id: 4,
+        title: "Theme Parks & Attractions",
+        iconName: "ticket",
+        iconSize: 42,
+        iconColor: "red",
+        screen: {screen: "ThemePark"},
+    },
+]
 
 function ThingsToDoScreen({navigation}) {
     return (
         <AppScreen style={styles.screenContainer}>
-            <View style={styles.container}>
-                <View style={styles.firstCard}>
-                <TouchableOpacity onPress={ () => navigation.navigate("Nature")} underlayColor={AppColor.blue}>
-                    <AppMinimalCard title="Nature & Parks"
-                        IconComponent={
-                        <AppIcon iconName="nature-people" size={42} colorStyle={{color: AppColor.green}}/>
+            <View style={styles.main}>
+                <ScrollView contentContainerStyle={styles.scroll}>
+                    <AppText style={styles.header}>
+                        Things to do
+                    </AppText>
+                    <View style={styles.container}>
+                    <FlatList
+                    data = {cards}
+                    keyExtractor = { author => author.id.toString()}
+                    renderItem = {({item}) => 
+                        <AppMinimalCard 
+                            title={item.title}
+                            IconComponent={
+                                <AppIcon 
+                                    iconName={item.iconName} 
+                                    size={item.iconSize} 
+                                    colorStyle={{color: AppColor[item.iconColor]}}/>
                         }
-                        screen="Nature"
+                        onPress={ () => navigation.navigate(item.screen.screen)}
+                        />}
+                    numColumns = {2}
                     />
-                </TouchableOpacity>
-                </View>
-                <View style={styles.secondCard}>
-                    <AppMinimalCard title="Beaches"
-                        IconComponent={
-                        <AppIcon iconName="beach" size={42} colorStyle={{color: AppColor.yellow}}/>
-                        }
-                    />
-                </View>
-                <View style={styles.thirdCard}>
-                    <AppMinimalCard title="Museums & Art Galleries"
-                        IconComponent={
-                        <AppIcon iconName="bank" size={42} colorStyle={{color: AppColor.orange}}/>
-                        }
-                    />
-                </View>
-                <View style={styles.fourthCard}>
-                    <AppMinimalCard title="Theme Parks & Attractions"
-                        IconComponent={
-                        <AppIcon iconName="ticket" size={42} colorStyle={{color: AppColor.red}}/>
-                        }
-                    />
-                </View>
+                    </View>
+                </ScrollView>
             </View>
         </AppScreen>
     );
@@ -50,22 +78,22 @@ function ThingsToDoScreen({navigation}) {
 
 const styles = StyleSheet.create({
     container: {
-        top: 200,
+        flexGrow: 1,
+        top: 50,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
-    firstCard: {
+    header: {
+        fontSize: 32,
+        fontWeight: 'bold',
+        marginTop: 30,
         marginLeft: 25,
     },
-    secondCard: {
-        top: -160,
-        left: 205,
+    scroll: {
+        flexGrow: 1,
     },
-    thirdCard: {
-        left: 25,
-        top: -140,
-    },
-    fourthCard: {
-        left: 205,
-        top: -300,
+    main: {
+        flex: 1,
     }
 })
 
