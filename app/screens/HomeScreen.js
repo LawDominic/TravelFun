@@ -1,28 +1,14 @@
-// import React from 'react';
+import React from 'react';
+import { View } from 'react-native';
 
-// import { Shadow } from 'react-native-neomorph-shadows';
-// import AppText from '../components/AppText';
+import AppText from '../components/AppText';
 
-// function HomeScreen(props) {
-//     return (
-//         <Shadow
-//         inner // <- enable inner shadow
-//         useArt // <- set this prop to use non-native shadow on ios
-//         style={{
-//             shadowOffset: {width: 10, height: 10},
-//             shadowOpacity: 1,
-//             shadowColor: "grey",
-//             shadowRadius: 10,
-//             borderRadius: 20,
-//             backgroundColor: 'white',
-//             width: 100,
-//             height: 100,
-//             // ...include most of View/Layout styles
-//         }}
-//         >
-//             <AppText>asd</AppText>
-//         </Shadow>
-//     );
-// }
+function HomeScreen(props) {
+    return (
+        <View>
+            <AppText>asd</AppText>
+        </View>
+    );
+}
 
-// export default HomeScreen;
+export default HomeScreen;
