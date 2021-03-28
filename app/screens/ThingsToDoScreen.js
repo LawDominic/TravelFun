@@ -46,31 +46,31 @@ const cards = [
 
 function ThingsToDoScreen({navigation}) {
     return (
-        <AppScreen style={styles.screenContainer}>
+        <AppScreen>
             <View style={styles.main}>
-                <ScrollView contentContainerStyle={styles.scroll}>
+                {/* <ScrollView contentContainerStyle={styles.scroll}> */}
                     <AppText style={styles.header}>
                         Things to do
                     </AppText>
                     <View style={styles.container}>
-                    <FlatList
-                    data = {cards}
-                    keyExtractor = { author => author.id.toString()}
-                    renderItem = {({item}) => 
-                        <AppMinimalCard 
-                            title={item.title}
-                            IconComponent={
-                                <AppIcon 
-                                    iconName={item.iconName} 
-                                    size={item.iconSize} 
-                                    colorStyle={{color: AppColor[item.iconColor]}}/>
-                        }
-                        onPress={ () => navigation.navigate(item.screen.screen)}
-                        />}
-                    numColumns = {2}
-                    />
+                        <FlatList
+                        data = {cards}
+                        keyExtractor = { author => author.id.toString()}
+                        renderItem = {({item}) => 
+                            <AppMinimalCard 
+                                title={item.title}
+                                IconComponent={
+                                    <AppIcon 
+                                        iconName={item.iconName} 
+                                        size={item.iconSize} 
+                                        colorStyle={{color: AppColor[item.iconColor]}}/>
+                            }
+                            onPress={ () => navigation.navigate(item.screen.screen)}
+                            />}
+                        numColumns = {2}
+                        />
                     </View>
-                </ScrollView>
+                {/* </ScrollView> */}
             </View>
         </AppScreen>
     );
