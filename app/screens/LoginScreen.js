@@ -10,33 +10,34 @@ import AppScreen from '../components/AppScreen';
 import AppText from '../components/AppText';
 import AppTextInput from '../components/AppTextInput';
 
-const users = [
-    {
-        name: "Keanu Reeves",
-        email: "keanu.reeves@gmail.com",
-        password: "password123"
-    }
-]
-
-const validateUser = () => {
-    return (
-        users.filter((user) => user.email === email && user.password === password).length > 0
-    )
-}
-
 const schema = yup.object().shape(
     {
         email: yup.
             string()
             .required()
             .email()
-            .label('Email'),
+            .label("Email"),
         password: yup
             .string()
             .required()
-            .label('Password'),
+            .label("Password"),
     }
 );
+
+const users = [
+    {
+        name: "Keanu Reeves",
+        email: "kr@gmail.com",
+        password: "1111",
+    }
+]
+
+const validateUser = ({email, password}) => {
+    return (
+        users.filter((user) => user.email === email && user.password === password).length > 0
+    )
+}
+
 //TODO: Database
 function LoginScreen({navigation}) {
     return (
