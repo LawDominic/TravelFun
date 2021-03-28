@@ -18,7 +18,7 @@ import ThemeParkScreen from '../screens/ThingsToDo/ThemeParkScreen';
 const AppStack = createStackNavigator();
 
 const AuthNavigator = () => (
-    <AppStack.Navigator initialRouteName="ThingsToDo">
+    <AppStack.Navigator initialRouteName="Login">
         {/* <AppStack.Screen name="Home" component={HomeScreen} options={{headerShown:false}}/> */}
         {/* <AppStack.Screen name="MyFavorite" component={MyFavoriteScreen} options={{headerShown:false}}/> */}
         <AppStack.Screen name="Beach" component={BeachScreen} options={{headerShown:false}}/>
