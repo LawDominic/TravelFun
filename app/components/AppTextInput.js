@@ -1,11 +1,15 @@
+// library imports
 import React from 'react';
-import { View, StyleSheet, TextInput } from 'react-native';
+import { StyleSheet, TextInput, View } from 'react-native';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
+
+// component imports
 import AppColor from '../config/AppColor';
 
-function AppTextInput({icon, ...otherProps}) {
+function AppTextInput({icon, containerStyle, ...otherProps}) {
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, containerStyle]}>
+            {/* icon component if there is */}
             {icon && <MaterialCommunityIcons name={icon} size={24} style={styles.icon}/>}
             <TextInput style={styles.textInput} {...otherProps}/>
         </View>
@@ -24,7 +28,6 @@ const styles = StyleSheet.create({
     },
     textInput:{
         fontSize:16,
-        fontFamily:'Roboto',
         color: AppColor.blackblue,
         marginLeft: 10,
         flex:1,

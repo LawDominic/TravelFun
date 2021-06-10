@@ -4,13 +4,13 @@ import {NavigationContainer} from '@react-navigation/native';
 import AuthNavigator from './app/navigation/AuthNavigator';
 import TabNavigator from './app/navigation/TabNavigator';
 
-//LogBox.ignoreLogs(['VirtualizedLists']);
+LogBox.ignoreLogs(['VirtualizedLists']);
 
 export default function App() {
   return (  
 
     <NavigationContainer>
-      <TabNavigator/>
+      <AuthNavigator/>
     </NavigationContainer>
 
   );

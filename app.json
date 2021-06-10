@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "A1",
-    "slug": "A1",
+    "name": "TravelFun",
+    "slug": "TravelFun",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./app/assets/icon.png",
@@ -23,10 +23,12 @@
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.doml.TravelFun"
     },
     "web": {
       "favicon": "./app/assets/favicon.png"
-    }
+    },
+    "description": "TravelFun is an Android-based mobile application built on the React Native framework and has been using the Pixel 3a as its testing device and the Android 11 API 30 testing operating system. It’s heavily inspired by the UI and functionality of the likes of TripAdvisor and Klook. The purpose of this app is to provide users with the ability to login, browse, personalise their experience with the ability to save a listing, and add a listing of their own. "
   }
 }

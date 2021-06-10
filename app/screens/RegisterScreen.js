@@ -1,16 +1,18 @@
+// library imports
 import React, {useState} from 'react';
 import { ImageBackground, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Formik} from 'formik';
 import * as yup from 'yup';
-// import * as SQLite from 'expo-sqlite';
 
+// component imports
 import AppButton from '../components/AppButton';
 import AppColor from '../config/AppColor';
 import AppScreen from '../components/AppScreen';
 import AppText from '../components/AppText';
 import AppTextInput from '../components/AppTextInput';
 
+// yup form
 const schema = yup.object().shape(
     {
         fullName: yup
@@ -30,15 +32,18 @@ const schema = yup.object().shape(
             .label('Password'),
     }
 );
-//TODO: Database
+
 function RegisterScreen({navigation}) {
     return (
         <AppScreen style={styles.container}>
             
+            {/* image background */}
             <ImageBackground
                 source={require('../assets/bg-img.jpeg')}
                 style={styles.bgimg}>
             <View style={styles.overlay}/>
+
+            {/* text */}
             <View>
                 <AppText style={styles.registerHeadeMsg}>
                     Sign Up
@@ -49,7 +54,8 @@ function RegisterScreen({navigation}) {
                 </AppText>
             </View>
 
-            <Formik //TODO: Form validation and error handling
+            {/* formik form handling */}
+            <Formik
                 initialValues={{fullName:'', email:'', password:'',}}
                 onSubmit = {values => console.log(values)}
                 validationSchema={schema}
@@ -93,7 +99,7 @@ function RegisterScreen({navigation}) {
                 </View>
 
                 <View style={styles.registerBtn}>
-                    <AppButton style="button" title="Create an account" color="blue" textC="lightergrey" onPress={handleSubmit}/>
+                    <AppButton title="Create an account" color="blue" textC="lightergrey" onPress={handleSubmit}/>
                     
                 </View>
                 </>
@@ -101,6 +107,7 @@ function RegisterScreen({navigation}) {
 
             </Formik>
             
+            {/* exisitng member message */}
             <View>
                 <AppText style={styles.existingMemberMsg}>
                     <TouchableWithoutFeedback>
@@ -134,7 +141,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'black',
     },
     existingMemberMsg: {
-        top: 350,
+        top: 300,
         textAlign: 'center',
         fontSize: 14,
     },
@@ -145,7 +152,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     registerBtn: {
-        top: 310,
+        top: 270,
         alignItems: 'center',
     },
     textInput: {

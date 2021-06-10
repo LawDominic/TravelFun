@@ -1,17 +1,21 @@
+// library imports
 import React from 'react';
-import { Text, TouchableOpacity, StyleSheet, View} from 'react-native';
-
-import AppColor from '../config/AppColor';
+import { StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import { Shadow } from 'react-native-shadow-2';
 
-function AppButton({style, title, color, textC, onPress}) {
+// component imports
+import AppColor from '../config/AppColor';
+
+function AppButton({title, color, textC, onPress}) {
     return (
+        //button shadow component
         <Shadow distance={8} startColor={AppColor.lightergrey, AppColor.darkgrey} distance={20} radius={10} offset={[0, 10]}>
-        <TouchableOpacity onPress={onPress}>
-            <View style={[styles[style], {backgroundColor:AppColor[color]}]}>
-                <Text style={[styles.text, {color:AppColor[textC]}]}>{title}</Text>
-            </View>
-        </TouchableOpacity>
+            {/* button component */}
+            <TouchableOpacity onPress={onPress}>
+                <View style={[styles.button, {backgroundColor:AppColor[color]}]}>
+                    <Text style={[styles.text, {color:AppColor[textC]}]}>{title}</Text>
+                </View>
+            </TouchableOpacity>
         </Shadow>
     );
 }

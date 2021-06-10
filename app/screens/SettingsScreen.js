@@ -1,6 +1,9 @@
+// library imports
 import React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
+import {MaterialCommunityIcons} from '@expo/vector-icons'
 
+// component imports
 import AppColor from '../config/AppColor';
 import AppIcon from '../components/AppIcon';
 import AppListItem from '../components/AppListItem';
@@ -8,36 +11,43 @@ import AppScreen from '../components/AppScreen';
 import AppText from '../components/AppText';
 import {useNavigation} from '@react-navigation/native';
 
-import {MaterialCommunityIcons} from '@expo/vector-icons'
-
-function SettingsScreen({navigation}) {
+function SettingsScreen({navigation, route}) {
     return (
         <AppScreen style={styles.container}>
             <View style={styles.headerContainer}>
-                <Image source={require('../assets/keanu_reeves.jpg')} style={styles.image}/>
+                {/* profile picture */}
+                <Image source={route.params.paramImage} style={styles.image}/>
 
+                {/* user name */}
                 <View style={styles.headerTextContainer}>
-                    <AppText style={styles.title}>Keanu Reeves</AppText>
-                    <AppText style={styles.subtitle}>@johnwick</AppText>
+                    <AppText style={styles.title}>{route.params.paramName}</AppText>
                 </View>
             </View>
-            
-            {/* TODO: Fix email/location section */}
 
             <View style={styles.subHeaderTextContainer}>
-                <AppListItem title="keanu.reeves@gmail.com" titleStyle="subtitle" IconComponent={
-                    <AppIcon iconName="email-outline" size={24} colorStyle={{color: AppColor.grey}}/>
+                {/* user email */}
+                <AppListItem title={route.params.paramEmail} titleStyle="subtitle" IconComponent={
+                    <AppIcon iconName="email-outline" size={24} colorStyle={{color: AppColor.blackblue}}/>
                 }/>
+                {/* user location */}
                 <AppListItem title="Sydney, Australia" titleStyle="subtitle" IconComponent={
-                    <AppIcon iconName="map-marker-outline" size={24} colorStyle={{color: AppColor.grey}}/>
+                    <AppIcon iconName="map-marker-outline" size={24} colorStyle={{color: AppColor.blackblue}}/>
                 }/>
             </View>
 
             <View style={styles.settingsContainer}>
-                <AppListItem title="My Favorites" titleStyle="title" IconComponent={
+                {/* my favourites screen */}
+                <AppListItem title="My Favourites" titleStyle="title" onPress={ () => navigation.navigate("MyFavorite")} IconComponent={
                     <AppIcon iconName="heart-outline" size={30} colorStyle={{color: AppColor.azure}}/>
                 }/>
-
+                {/* add listing screen */}
+                <AppListItem title="Add Listing" titleStyle="title" containerStyle={{marginTop: 15}} onPress={ () => navigation.navigate("AddListing")} IconComponent={
+                    <AppIcon iconName="note-plus-outline" size={30} colorStyle={{color: AppColor.azure}}/>
+                }/>
+                {/* logout component placeholder */}
+                <AppListItem title="Logout" titleStyle="title" containerStyle={{marginTop: 15}} onPress={ () => console.log("Logout")} IconComponent={
+                    <AppIcon iconName="logout" size={30} colorStyle={{color: AppColor.red}}/>
+                }/>
             </View>
         </AppScreen>
     );
@@ -45,7 +55,6 @@ function SettingsScreen({navigation}) {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: AppColor.lightergrey,
         flex: 1,
     },
     image: {
@@ -63,6 +72,7 @@ const styles = StyleSheet.create({
         marginTop: 45,
     },
     title: {
+        marginTop: 10,
         fontSize: 24,
         fontWeight: 'bold',
     },
@@ -75,7 +85,7 @@ const styles = StyleSheet.create({
     },
     settingsContainer: {
         marginLeft: 7,
-        marginTop: 30,
+        marginTop: 40,
     }
 })
 

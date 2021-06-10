@@ -1,15 +1,19 @@
+// library imports
 import React, {useState} from 'react';
 import { ImageBackground, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Formik} from 'formik';
 import * as yup from 'yup';
 
+// component imports
 import AppButton from '../components/AppButton';
 import AppColor from '../config/AppColor';
 import AppScreen from '../components/AppScreen';
 import AppText from '../components/AppText';
 import AppTextInput from '../components/AppTextInput';
+import DataManager from '../config/DataManager';
 
+// yup form
 const schema = yup.object().shape(
     {
         email: yup.
@@ -24,30 +28,49 @@ const schema = yup.object().shape(
     }
 );
 
+// users list
 const users = [
     {
+        id: 1,
         name: "Keanu Reeves",
-        email: "kr@gmail.com",
+        email: "kr@kr.com",
         password: "1111",
+        image: require('../assets/keanu_reeves.jpg'),
     }
 ]
 
+// validation of user login
 const validateUser = ({email, password}) => {
     return (
         users.filter((user) => user.email === email && user.password === password).length > 0
     )
 }
 
-//TODO: Database
+// get user credentials
+const getUser = ({email}) => {
+    return users.find((user) => user.email === email);
+}
+
+// set userID after login
+const createUser = ({email}) => {
+    let commonData = DataManager.getInstance();
+    let userID = getUser({email}).id;
+    commonData.setUserID(userID);
+}
+
 function LoginScreen({navigation}) {
     return (
         <AppScreen style={styles.container}>
             
+            {/* background image */}
             <ImageBackground
                 source={require('../assets/bg-img.jpeg')}
                 style={styles.bgimg}>
+            
+            {/* opacity overlay */}
             <View style={styles.overlay}/>
 
+            {/* text */}
             <View>
                 <AppText style={styles.registerHeadeMsg}>
                     Sign In
@@ -58,13 +81,24 @@ function LoginScreen({navigation}) {
                 </AppText>
             </View>
 
-            <Formik //TODO: Form validation and error handling
+            {/* formik form handling*/}
+            <Formik
                 initialValues={{email:'', password:'',}}
                 onSubmit = {(values, {resetForm}) => {
                     if (validateUser(values)){
-                        console.log(values);
                         resetForm();
-                        navigation.navigate("ThingsToDo");
+                        createUser(values);
+                        navigation.navigate("Home", {
+                            screen: "Settings",
+                            params: {
+                                screen: "Settings",
+                                params: {
+                                    paramEmail: values.email,
+                                    paramName: getUser(values).name,
+                                    paramImage: getUser(values).image,
+                                }
+                            }
+                        });
                     } else {
                         resetForm();
                         alert("Invalid login details")
@@ -76,31 +110,35 @@ function LoginScreen({navigation}) {
             {({handleChange, handleSubmit, errors, setFieldTouched, touched}) => (
             <>
                 <View style={styles.textInput}>
+                    {/* user input - email */}
                     {touched.email && <AppText>{errors.email}</AppText>}
                     <AppTextInput
-                                autoCapitalize='none'
-                                autoCorrect={false}
-                                icon='email'
-                                placeholder='Email address'
-                                textContentType='emailAddress'
-                                onBlur = {() => setFieldTouched('email')}
-                                onChangeText = { handleChange('email') }
+                        autoCapitalize='none'
+                        autoCorrect={false}
+                        icon='email'
+                        placeholder='Email address'
+                        textContentType='emailAddress'
+                        onBlur = {() => setFieldTouched('email')}
+                        onChangeText = { handleChange('email') }
                     /> 
+
+                    {/* user input - password */}
                     {touched.password && <AppText>{errors.password}</AppText>}
                     <AppTextInput
-                                autoCapitalize='none'
-                                autoCorrect={false}
-                                icon='lock'
-                                placeholder='Password'
-                                secureTextEntry
-                                textContentType='password'
-                                onBlur = {() => setFieldTouched('password')}
-                                onChangeText = { handleChange('password') }
+                        autoCapitalize='none'
+                        autoCorrect={false}
+                        icon='lock'
+                        placeholder='Password'
+                        secureTextEntry
+                        textContentType='password'
+                        onBlur = {() => setFieldTouched('password')}
+                        onChangeText = { handleChange('password') }
                     />   
                 </View>
 
+                {/* login button */}
                 <View style={styles.loginBtn}>
-                    <AppButton style="button" title="Login" color="blue" textC="lightergrey" onPress={handleSubmit}/>
+                    <AppButton title="Login" color="blue" textC="lightergrey" onPress={handleSubmit}/>
                 </View>
 
                 </>
@@ -108,6 +146,7 @@ function LoginScreen({navigation}) {
 
             </Formik>
 
+            {/* new member message */}
             <View>
                 <AppText style={styles.newMemberMsg}>
                     <TouchableWithoutFeedback>
@@ -138,12 +177,12 @@ const styles = StyleSheet.create({
         backgroundColor: 'black',
     },
     loginBtn: {
-        marginTop: 80,
+        top: 100,
         alignItems: 'center',
     },
     newMemberMsg: {
         color: AppColor.blackblue,
-        top: 80,
+        top: 130,
         textAlign: 'center',
         fontSize: 14,
     },

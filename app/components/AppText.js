@@ -1,5 +1,8 @@
+// library imports
 import React from 'react';
-import { Text,StyleSheet } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
+
+// component imports
 import AppColor from '../config/AppColor';
 
 function AppText({style, children}) {

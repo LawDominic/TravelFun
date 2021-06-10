@@ -1,17 +1,22 @@
+// library imports
 import React from 'react';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+
+// component imports
 import AppColor from '../config/AppColor';
 import AppText from './AppText';
 
-function AppListItem({title, titleStyle, IconComponent}) {
+function AppListItem({title, titleStyle, IconComponent, onPress, containerStyle}) {
     return (
-        <TouchableOpacity onPress={ () => {console.log('Log')}}>
-            <View style={styles.container}>
+        <TouchableOpacity onPress={onPress}>
+            <View style={[styles.container, containerStyle]}>
 
+                {/* icon component */}
                 <View style={styles.icon}>
                     {IconComponent}
                 </View>
 
+                {/* text component */}
                 <View style={styles.textContainer}>
                     <AppText style={styles[titleStyle]}>{title}</AppText>
                 </View>
@@ -40,10 +45,11 @@ const styles = StyleSheet.create({
         marginTop: 3,
     },
     subtitle: {
-        color: AppColor.grey,
+        color: AppColor.blackblue,
         fontSize: 14,
-        fontWeight:'bold',
         marginLeft: 2,
+        marginTop: 2,
+        fontStyle: 'italic',
     }
 })
 
