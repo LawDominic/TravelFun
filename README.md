@@ -25,9 +25,9 @@
 
 ## Upcoming Features
 
-- [] User authentication with Firebase
-- [] Data storage with Firestore
-- [] More coming soon!
+- [ ] User authentication with Firebase
+- [ ] Data storage with Firestore
+- [ ] More coming soon!
 
 ## How To Use
 
