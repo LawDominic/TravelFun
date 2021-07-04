@@ -25,9 +25,9 @@
 
 ## Upcoming Features
 
-* User authentication with Firebase
-* Data storage with Firestore
-* More coming soon!
+- [] User authentication with Firebase
+- [] Data storage with Firestore
+- [] More coming soon!
 
 ## How To Use
 
@@ -55,7 +55,7 @@ $ npm install
 $ npx react-native start
 
 # Start the emulator
-$npx react-native run-android
+$ npx react-native run-android
 ```
 
 ## Credits
